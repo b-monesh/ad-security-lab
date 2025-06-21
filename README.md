@@ -163,9 +163,15 @@ Restart the computer
 
 ✅ Now your Windows 10 client is successfully joined to the domain and can be managed using Group Policy!
 
+![VBOX](screenshots/13.png)
+![AD](screenshots/1.png)
+
+
 ## 🛡️ Group Policy Implementation & Security Hardening
 
 These policies were applied using Group Policy Management Console (GPMC) on the Domain Controller to harden the Windows environment and reduce the attack surface on domain-joined clients.
+
+![GPO](screenshots/2.png)
 
 ---
 
@@ -190,4 +196,150 @@ GPMC > Default Domain Policy
 - Forces regular password changes  
 - Helps mitigate brute-force and credential stuffing attacks
 
-![Password Policy Settings](screenshots/password-policy.png)
+![Password Policy Settings](screenshots/3.png)
+
+### 2. 🔒 Account Lockout Policy
+
+**Where to configure:**
+
+GPMC > Default Domain Policy
+→ Computer Configuration → Policies → Windows Settings → Security Settings → Account Policies → Account Lockout Policy
+
+
+**What to change:**
+
+- Account lockout threshold → 3 attempts  
+- Lockout duration → 0 minutes (Admin can only unlock the account)  
+- Reset lockout counter after → 2 minutes
+
+
+**Impact:**
+
+- Blocks repeated failed login attempts  
+- Protects against password-guessing and brute-force login attacks
+
+![Account Lockout Policy Settings](screenshots/4.png)
+
+### 3. 🚫 Block USB Storage Devices
+
+**Where to configure:**
+
+New GPO (e.g., Block USB)
+→ Computer Configuration → Policies → Administrative Templates → System → Removable Storage Access
+
+
+**What to change:**
+
+- All Removable Storage classes: Deny all access → **Enabled**
+
+**Impact:**
+
+- Prevents use of USB drives (data theft, malware delivery)  
+- Enforces data loss prevention (DLP) policies
+
+<p align="center">
+  <img src="screenshots/5.png" alt="Block USB Storage Policy - Setting" width="45%" />
+  <img src="screenshots/11.png" alt="Block USB Storage Policy - Effect" width="45%" />
+</p>
+
+### 4. 💻 Disable Command Prompt
+
+**Where to configure:**
+
+User Configuration → Administrative Templates → System
+
+**What to change:**
+
+- Prevent access to command prompt → **Enabled**  
+- Disable script processing → **Yes**
+
+**Impact:**
+
+- Prevents command-line misuse  
+- Reduces risk of internal privilege escalation or running malicious scripts
+
+![Disable CMD - Effect](screenshots/9.png)
+
+### 5. 🧪 Disable PowerShell
+
+**Where to configure:**
+
+User Configuration → Administrative Templates → System
+→ Don't run specified Windows applications
+
+
+**What to change:**
+
+1. Enable the setting  
+2. Click **Show...** and add:
+
+%SystemRoot%\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+
+
+**Impact:**
+
+- Prevents use of PowerShell by standard users  
+- Blocks one of the most powerful tools attackers and malware often use
+
+![Disable Powershell - Effect](screenshots/7.png)
+
+### 6. 🔧 Disable Task Manager
+
+**Where to configure:**
+
+User Configuration → Administrative Templates → System → Ctrl+Alt+Del Options
+
+
+**What to change:**
+
+- Remove Task Manager → **Enabled**
+
+**Impact:**
+
+- Prevents users from ending important background services or security tools  
+- Enhances control over the user environment in lab or restricted settings
+
+![Disable TaskManager - Effect](screenshots/10.png)
+
+### 8. 🛡️ Enable Real-Time Protection (Windows Defender)
+
+**Where to configure:**
+
+Computer Configuration → Administrative Templates → Windows Components → Microsoft Defender Antivirus → Real-time Protection
+
+**What to change:**
+
+- Turn on real-time protection → **Enabled**
+
+**Impact:**
+
+- Ensures real-time malware protection is active  
+- Detects and blocks threats as they occur
+
+![RealTime Protection ](screenshots/12.png)
+
+---
+
+## ✅ Summary
+
+This lab walkthrough demonstrated how to configure core **Group Policy Objects (GPOs)** to secure a Windows Active Directory environment. By applying these policies, you:
+
+- Reduced the attack surface on domain-joined machines  
+- Enforced secure user behavior through restrictions and password policies  
+- Blocked common tools used in attacks (PowerShell, USBs, Task Manager, etc.)  
+- Strengthened endpoint protection with Windows Defender
+
+These configurations are essential for any blue team, SOC analyst, or IT administrator setting up a secure AD lab or enterprise environment.
+
+---
+
+## Final Notes
+
+- This lab is ideal for SOC and Blue Team beginners to gain hands-on experience.
+- All screenshots and settings are tested on Windows Server 2019 and Windows 10.
+- Feel free to fork, clone, or expand this repo for your own blue team toolkit or homelab!
+
+---
+
+> 🛡️ *Security is not a one-time setup — it's continuous defense. Keep monitoring, patching, and hardening.*
+
