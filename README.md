@@ -133,7 +133,7 @@ Ensure the Windows 10 client can reach the domain controller.
 Open Command Prompt and run:
 
 ```cmd
-ping dc01
+ping DC01
 ping [Server_IP]
 ```
 If there's no response, make sure both VMs are attached to the same NAT Network or Internal Network in VirtualBox.
@@ -322,7 +322,7 @@ Computer Configuration → Administrative Templates → Windows Components → M
 
 ## ✅ Summary
 
-This lab walkthrough demonstrated how to configure core **Group Policy Objects (GPOs)** to secure a Windows Active Directory environment. By applying these policies, you:
+This lab walkthrough demonstrated how to configure core **Group Policy Objects (GPOs)** to secure a Windows Active Directory environment. By applying these policies :
 
 - Reduced the attack surface on domain-joined machines  
 - Enforced secure user behavior through restrictions and password policies  
