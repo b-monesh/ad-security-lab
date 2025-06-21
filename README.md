@@ -335,7 +335,7 @@ These configurations are essential for any blue team, SOC analyst, or IT adminis
 
 ## Final Notes
 
-- This lab is ideal for SOC and Blue Team beginners to gain hands-on experience.
+- This lab is ideal for SOC and Blue Team beginners like me to gain hands-on experience.
 - All screenshots and settings are tested on Windows Server 2019 and Windows 10.
 - Feel free to fork, clone, or expand this repo for your own blue team toolkit or homelab!
 
